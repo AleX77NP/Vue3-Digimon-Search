@@ -4,6 +4,7 @@
     <input v-model="name" class="name-input" type="text" placeholder="Enter name..." />
     <button @click="newName = name" class="btn-s">Search</button>
     <p>{{newName}}</p>
+    <p>{{selectedDigimon}}</p>
   </div>
   <ul class="digi-list">
     <li v-for="elem in data" :key="elem.name">
@@ -21,6 +22,7 @@ export default {
   setup() {
     const name = ref(null)
     const newName = ref(null)
+    const selectedDigimon = ref(null)
     const state = reactive({data: []})
 
     watch(() => {
@@ -31,9 +33,18 @@ export default {
         state.data = data;
       });
     })
+    watch(() => {
+      if(name.value)
+      fetch(`https://digimon-api.vercel.app/api/digimon`).then(response => response.json())
+      .then(data => {
+        console.log(data);
+        state.data = data.filter(e => e.name.toLowerCase().includes(name.value.toLowerCase()));
+    });
+  })
     return{
       name,
       newName,
+      selectedDigimon,
       ...toRefs(state)
     }
   }
