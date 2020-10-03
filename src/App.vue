@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title-s">Search by name:</h1>
+    <h1 class="title-s">Search Digimon by name:</h1>
     <input v-model="name" class="name-input" type="text" placeholder="Enter name..." />
     <button @click="newName = name" class="btn-s">Search</button>
     <p>{{newName}}</p>
